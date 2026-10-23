@@ -6,8 +6,10 @@ clock = pygame.time.Clock()
 running = True
 play = False
 play_button = pygame.image.load("play.png")
-title = pygame.image.load("wordle.png")
-begin_guessing = pygame.image.load("begin_guessing.png")
+hack_club = pygame.image.load("hack_club.png")
+back = pygame.image.load("back.png")
+ant_word = pygame.image.load("ant.png")
+ant_logo = pygame.image.load("ant_logo.png")
 
 
 while running:
@@ -19,16 +21,21 @@ while running:
                 play = True
 
     screen.fill((0, 0, 0))
-    screen.blit(title, (300, 100))
+    screen.blit(ant_logo, (300, 70))
     screen.blit(play_button, (300, 400))
+    screen.blit(hack_club, (100, 190))
     pygame.display.flip()
     clock.tick(60)
     while play == True:
         for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                     if back.get_rect(topleft=(10,10)).collidepoint(event.pos):
+                          play = False
         screen.fill((200, 200, 200))
-        screen.blit(begin_guessing, (300, 100))
+        screen.blit(ant_word, (300, 100))
+        screen.blit(back, (10, 10))
         pygame.display.flip()
 
 pygame.quit()
