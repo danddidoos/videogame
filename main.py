@@ -32,6 +32,7 @@ while running:
         for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
+                    play = False
                 if event.type == pygame.MOUSEBUTTONDOWN:
                      if back.get_rect(topleft=(10,10)).collidepoint(event.pos):
                           play = False
