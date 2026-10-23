@@ -10,6 +10,7 @@ hack_club = pygame.image.load("hack_club.png")
 back = pygame.image.load("back.png")
 ant_word = pygame.image.load("ant.png")
 ant_logo = pygame.image.load("ant_logo.png")
+credits = pygame.transform.scale(pygame.image.load("credits.png"), (500, 50))
 
 
 while running:
@@ -24,6 +25,7 @@ while running:
     screen.blit(ant_logo, (300, 70))
     screen.blit(play_button, (300, 400))
     screen.blit(hack_club, (100, 190))
+    screen.blit(credits, (200, 530))
     pygame.display.flip()
     clock.tick(60)
     while play == True:
