@@ -2,6 +2,7 @@ import pygame
 from constants import *
 from ant import Ant
 from snake import Snake 
+from fruit import Fruit
 
 pygame.init()
 pygame.display.set_caption("ANT")
@@ -10,6 +11,8 @@ clock = pygame.time.Clock()
 running = True
 play = False
 dead = False
+fruit_counter = 0
+font = pygame.font.Font(None, 36)
 play_button = pygame.image.load("assets/play.png")
 hack_club = pygame.image.load("assets/hack_club.png")
 back = pygame.image.load("assets/back.png")
@@ -19,6 +22,7 @@ credits = pygame.transform.scale(pygame.image.load("assets/credits.png"), (500, 
 
 
 ant = Ant(col=5, row=5)
+fruit = Fruit()
 
 def draw_grid(surface):
     for row in range(GRID_ROWS):
@@ -40,6 +44,11 @@ while running:
             if not play and play_button.get_rect(topleft=(450, 450)).collidepoint(event.pos):
                 play = True
                 snake1.reset(0, 0)
+                ant.col = 5
+                ant.row = 5
+                fruit.respawn(snake1.body, (ant.col, ant.row))
+                fruit_counter = 0
+
             elif play and back.get_rect(topleft=(10,10)).collidepoint(event.pos) or dead and back.get_rect(topleft=(10,10)).collidepoint(event.pos):
                 play = False
                 dead = False
@@ -61,11 +70,18 @@ while running:
         draw_grid(screen)
         ant.handle_held_movement()
         ant.update_animation()
-        ant.draw(screen)
+        ant.draw(screen, fruit_counter)
         snake1.chase(ant)
+        if ant.col == fruit.col and ant.row == fruit.row:
+            fruit.respawn(snake1.body, (ant.col, ant.row))
+            fruit_counter +=1
         screen.blit(ant_word, (300, 100))
         screen.blit(back, (10, 10))
         snake1.draw(screen)
+        fruit.draw(screen)
+        fruit_score_surface = font.render(f"Fruit Counter: {fruit_counter}", True, (0,0,0))
+        fruit_score_rect = fruit_score_surface.get_rect(topright=(SCREEN_WIDTH - 20, 20))
+        screen.blit(fruit_score_surface, fruit_score_rect)
 
     else:
         #Death screen
