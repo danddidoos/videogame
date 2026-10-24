@@ -1,5 +1,4 @@
 import pygame 
-import sys
 from constants import *
 from ant import Ant
 from snake import Snake 
@@ -62,10 +61,10 @@ while running:
         screen.blit(credits, (200, 530))
     
     else: 
+        screen.fill((200, 200, 200))
         draw_grid(screen)
         ant.draw(screen)
         snake1.chase(ant)
-        screen.fill((200, 200, 200))
         screen.blit(ant_word, (300, 100))
         screen.blit(back, (10, 10))
         snake1.draw(screen)
