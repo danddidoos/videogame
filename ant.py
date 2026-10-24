@@ -35,7 +35,6 @@ class Ant(pygame.sprite.Sprite):
         keys = pygame.key.get_pressed()
 
         d_col, d_row = 0, 0
-        was_moving = self.is_moving
 
         if keys[pygame.K_LEFT] or keys[pygame.K_a]:
             self.direction = "LEFT"
@@ -57,11 +56,18 @@ class Ant(pygame.sprite.Sprite):
 
     def update_animation(self):
         keys = pygame.key.get_pressed()
-        is_key_pressed = (
-            keys[pygame.K_LEFT] or keys[pygame.K_a] or
-            keys[pygame.K_RIGHT] or keys[pygame.K_d] or
-            keys[pygame.K_UP] or keys[pygame.K_w] or
-            keys[pygame.K_DOWN] or keys[pygame.K_s]
+        is_key_pressed = any(
+            keys[k]
+            for k in (
+                pygame.K_LEFT,
+                pygame.K_a,
+                pygame.K_RIGHT,
+                pygame.K_d,
+                pygame.K_UP,
+                pygame.K_w,
+                pygame.K_DOWN,
+                pygame.K_s,
+            )
         )
 
         if self.is_moving:
@@ -84,8 +90,9 @@ class Ant(pygame.sprite.Sprite):
         if 0 <= new_col < GRID_COLS and 0 <= new_row < GRID_ROWS:
             self.col = new_col
             self.row = new_row
+            if not self.is_moving:
+                self.frame_index = 0.0
             self.is_moving = True
-            self.frame_index = 0
 
     def draw(self, surface):
         angles = {
