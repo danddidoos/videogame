@@ -2,6 +2,7 @@ import pygame
 import sys
 from constants import *
 from ant import Ant
+from snake import Snake 
 
 pygame.init()
 pygame.display.set_caption("ANT")
@@ -26,6 +27,8 @@ def draw_grid(surface):
             pygame.draw.rect(surface, base_color)
             pygame.draw.rect(surface, (0, 0, 0), rect, 1)
 
+
+snake1 = Snake()
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -65,7 +68,7 @@ while running:
         screen.fill((200, 200, 200))
         screen.blit(ant_word, (300, 100))
         screen.blit(back, (10, 10))
-        
+        snake1.draw(screen)
     pygame.display.flip()
     clock.tick(60)
 
