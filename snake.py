@@ -4,7 +4,7 @@ from constants import *
 class Snake:
     def __init__(self):
         self.body = [(GRID_COLS // 2, GRID_ROWS // 2)]
-        self.image = pygame.image.load("snake.png")
+        self.image = pygame.image.load("assets/snake.png")
         self.position = [1, 0]
         self.row = 0
         self.col = 0
