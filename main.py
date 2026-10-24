@@ -12,13 +12,18 @@ running = True
 play = False
 dead = False
 win = False
+rules = False
 fruit_counter = 0
 font = pygame.font.Font(None, 36)
-play_button = pygame.image.load("assets/play.png")
+play_button = pygame.transform.scale(pygame.image.load("assets/menu/playbutton_unpressed.png"), (1000, 800))
+play_button_hovered= pygame.transform.scale(pygame.image.load("assets/menu/playbutton_hovered.png"), (1000, 800))
 hack_club = pygame.image.load("assets/hack_club.png")
 back = pygame.image.load("assets/back.png")
 ant_logo = pygame.image.load("assets/ant_logo.png")
 credits = pygame.transform.scale(pygame.image.load("assets/credits.png"), (500, 150))
+rules_button = pygame.image.load("assets/rules_button.png")
+rules_background = pygame.image.load("assets/rules_background.png")
+title_screen = pygame.transform.scale(pygame.image.load("assets/menu/titlescreen.png"), (1320, 770))
 
 
 ant = Ant(col=5, row=5)
@@ -49,22 +54,30 @@ while running:
                 fruit.respawn(snake1.body, (ant.col, ant.row))
                 fruit_counter = 0
 
-            elif play and back.get_rect(topleft=(10,10)).collidepoint(event.pos) or dead and back.get_rect(topleft=(10,10)).collidepoint(event.pos):
+            elif play and back.get_rect(topleft=(10,10)).collidepoint(event.pos) or dead and back.get_rect(topleft=(10,10)).collidepoint(event.pos) or win and back.get_rect(topleft=(10,10)).collidepoint(event.pos):
                 play = False
                 dead = False
+                rules = False
+                win = False
                 snake1.reset(0, 0)
                 ant.col = 5
                 ant.row = 5
+            
 
-    if not play and not dead and not win:
+            elif not play and rules_button.get_rect(topleft=(460,350)).collidepoint(event.pos):
+                rules = True
+
+
+
+    if not play and not dead and not win and not rules:
         # Main Menu
-        screen.fill((0, 0, 0))
-        screen.blit(ant_logo, (550, 70))
-        screen.blit(play_button, (450, 450))
-        screen.blit(hack_club, (350, 190))
-        screen.blit(credits, (450, 630))
+        screen.blit(title_screen, (0, 0))
+        if play_button.get_bounding_rect().move(200,100).collidepoint(pygame.mouse.get_pos()) or play_button_hovered.get_bounding_rect().move(200,100).collidepoint(pygame.mouse.get_pos()):
+            screen.blit(play_button_hovered, (200, 100))
+        else:
+            screen.blit(play_button, (200, 100))
     
-    elif not dead and not win: 
+    elif not dead and not win and not rules: 
         # Game
         screen.fill((200, 200, 200))
         draw_grid(screen)
@@ -76,13 +89,13 @@ while running:
             fruit.respawn(snake1.body, (ant.col, ant.row))
             fruit_counter +=1
         screen.blit(back, (10, 10))
-        snake1.draw(screen)
         fruit.draw(screen)
         fruit_score_surface = font.render(f"Fruit Counter: {fruit_counter}", True, (0,0,0))
         fruit_score_rect = fruit_score_surface.get_rect(topright=(SCREEN_WIDTH - 20, 20))
         screen.blit(fruit_score_surface, fruit_score_rect)
+        snake1.draw(screen)
 
-    elif not play and not win:
+    elif not play and not win and not rules:
         #Death screen
         screen.fill((0, 0, 0))
         font = pygame.font.Font(None, 74)
@@ -91,7 +104,7 @@ while running:
         screen.blit(text, text_rect)
         screen.blit(back, (10, 10))
 
-    else:
+    elif not play and not dead and not rules:
         #Victory screen
         screen.fill((222, 221, 150))
         font = pygame.font.Font(None, 74)
@@ -99,6 +112,12 @@ while running:
         text_rect = text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 ))
         screen.blit(text, text_rect)
         screen.blit(back, ((10,10)))
+
+    else:
+        #Rules screen
+        screen.blit(rules_background, (0,0))
+        screen.blit(back, ((10,10)))
+
     if ant.col == snake1.col and ant.row == snake1.row:
         if fruit_counter >= 10:
             win = True
