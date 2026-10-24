@@ -25,7 +25,6 @@ rules_button = pygame.image.load("assets/rules_button.png")
 rules_background = pygame.image.load("assets/rules_background.png")
 title_screen = pygame.transform.scale(pygame.image.load("assets/menu/titlescreen.png"), (1320, 770))
 
-
 ant = Ant(col=5, row=5)
 fruit = Fruit()
 
@@ -62,12 +61,9 @@ while running:
                 snake1.reset(0, 0)
                 ant.col = 5
                 ant.row = 5
-            
 
             elif not play and rules_button.get_rect(topleft=(460,350)).collidepoint(event.pos):
                 rules = True
-
-
 
     if not play and not dead and not win and not rules:
         # Main Menu
@@ -96,7 +92,7 @@ while running:
         snake1.draw(screen)
 
     elif not play and not win and not rules:
-        #Death screen
+        # Death screen
         screen.fill((0, 0, 0))
         font = pygame.font.Font(None, 74)
         text = font.render("Game Over", True, (255, 0, 0))
@@ -105,7 +101,7 @@ while running:
         screen.blit(back, (10, 10))
 
     elif not play and not dead and not rules:
-        #Victory screen
+        # Victory screen
         screen.fill((222, 221, 150))
         font = pygame.font.Font(None, 74)
         text = font.render("Victory!", True, (222, 175, 145))
@@ -114,7 +110,7 @@ while running:
         screen.blit(back, ((10,10)))
 
     else:
-        #Rules screen
+        # Rules screen
         screen.blit(rules_background, (0,0))
         screen.blit(back, ((10,10)))
 
@@ -128,6 +124,5 @@ while running:
 
     pygame.display.flip()
     clock.tick(60)
-
 
 pygame.quit()
