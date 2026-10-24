@@ -14,6 +14,8 @@ class Snake:
 
         self.head_image = pygame.transform.scale(pygame.image.load("assets/snake/snake_head.png").convert_alpha(), (TILE_SIZE, TILE_SIZE))
         self.body_image = pygame.transform.scale(pygame.image.load("assets/snake/snake_body_line.png").convert_alpha(), (TILE_SIZE, TILE_SIZE))
+        self.bend_image = pygame.transform.scale(pygame.image.load("assets/snake/snake_body_bend.png").convert_alpha(), (TILE_SIZE, TILE_SIZE))
+        self.tail_image = pygame.transform.scale(pygame.image.load("assets/snake/snake_tail.png").convert_alpha(), (TILE_SIZE, TILE_SIZE))
 
     @property
     def col(self):
@@ -65,12 +67,85 @@ class Snake:
 
     def draw(self, surface):
         for i, (col, row) in enumerate(self.body):
+            # 1. Skip drawing if off-screen
+            if col < 0 or col >= GRID_COLS or row < 0 or row >= GRID_ROWS:
+                continue
+
             pixel_x = col * TILE_SIZE
             pixel_y = row * TILE_SIZE
+
             if i == 0:
-                surface.blit(self.head_image, (pixel_x, pixel_y))
+                # Head
+                next_seg = self.body[1]
+                dx = col - next_seg[0]
+                dy = row - next_seg[1]
+
+                if dx == 1: 
+                    angle = -90
+                elif dx == -1: 
+                    angle = 90
+                elif dy == 1: 
+                    angle = 180
+                else: angle = 0
+
+                rotated = pygame.transform.rotate(self.head_image, angle)
+                surface.blit(rotated, (pixel_x, pixel_y))
+
+            elif i == len(self.body) - 1:
+                # Tail
+                prev_seg = self.body[i - 1]
+                dx = prev_seg[0] - col
+                dy = prev_seg[1] - row
+
+                if dx == 1: 
+                    angle = -90
+                elif dx == -1: 
+                    angle = 90 
+                elif dy == 1: 
+                    angle = 180
+                elif dy == -1: 
+                    angle = 0
+
+                rotated = pygame.transform.rotate(self.tail_image, angle)
+                surface.blit(rotated, (pixel_x, pixel_y))
+
             else:
-                surface.blit(self.body_image, (pixel_x, pixel_y))
+                # Body
+                prev_seg = self.body[i - 1]
+                next_seg = self.body[i + 1]
+
+                p_dx = prev_seg[0] - col
+                p_dy = prev_seg[1] - row
+                n_dx = next_seg[0] - col
+                n_dy = next_seg[1] - row
+
+                # Skip/ignore overlapping segments (e.g. at spawn)
+                if (p_dx == 0 and p_dy == 0) or (n_dx == 0 and n_dy == 0):
+                    continue
+
+                # Case A: Horizontal straight line (both neighbors share same row)
+                if p_dy == 0 and n_dy == 0:
+                    rotated = pygame.transform.rotate(self.body_image, 90)
+
+                # Case B: Vertical straight line (both neighbors share same column)
+                elif p_dx == 0 and n_dx == 0:
+                    rotated = pygame.transform.rotate(self.body_image, 0)
+
+                # Case C: Corner / Bend segment
+                else:
+                    neighbours = {(p_dx, p_dy), (n_dx, n_dy)}
+                    if neighbours == {(0, 1), (1, 0)}:
+                        rotated = pygame.transform.rotate(self.bend_image, -90)
+                    elif neighbours == {(0, 1), (-1, 0)}:
+                        rotated = pygame.transform.rotate(self.bend_image, 180)
+                    elif neighbours == {(0, -1), (-1, 0)}:
+                        rotated = pygame.transform.rotate(self.bend_image, 90)
+                    elif neighbours == {(0, -1), (1, 0)}:
+                        rotated = pygame.transform.rotate(self.bend_image, 0)
+                    else:
+                        rotated = self.body_image
+
+                surface.blit(rotated, (pixel_x, pixel_y))
 
     def reset(self, start_col=0, start_row=0):
         self.body = []
