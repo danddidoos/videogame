@@ -41,21 +41,8 @@ while running:
             elif play and back.get_rect(topleft=(10,10)).collidepoint(event.pos):
                 play = False
 
-        elif event.type == pygame.KEYDOWN:
-            if event.key in (pygame.K_LEFT, pygame.K_a):
-                ant.direction = "LEFT"
-                ant.move(-1, 0)
-            elif event.key in (pygame.K_RIGHT, pygame.K_d):
-                ant.direction = "RIGHT"
-                ant.move(1, 0)
-            elif event.key in (pygame.K_UP, pygame.K_w):
-                ant.direction = "UP"
-                ant.move(0, -1)
-            elif event.key in (pygame.K_DOWN, pygame.K_s):
-                ant.direction = "DOWN"
-                ant.move(0, 1)    
-
     if not play:
+        # Main Menu
         screen.fill((0, 0, 0))
         screen.blit(ant_logo, (300, 70))
         screen.blit(play_button, (200, 350))
@@ -63,8 +50,10 @@ while running:
         screen.blit(credits, (200, 530))
     
     else: 
+        # Game
         screen.fill((200, 200, 200))
         draw_grid(screen)
+        ant.handle_held_movement()
         ant.update_animation()
         ant.draw(screen)
         snake1.chase(ant)

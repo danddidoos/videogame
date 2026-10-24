@@ -24,6 +24,36 @@ class Ant(pygame.sprite.Sprite):
         self.image = self.frames[0]
         self.rect = self.image.get_rect(center=(x, y))
 
+        self.step_delay = 150
+        self.last_step_time = 0
+
+    def handle_held_movement(self):
+        current_time = pygame.time.get_ticks()
+        keys = pygame.key.get_pressed()
+
+        d_col, d_row = 0, 0
+
+        if keys[pygame.K_LEFT] or keys[pygame.K_a]:
+            self.direction = "LEFT"
+            d_col = -1
+        elif keys[pygame.K_RIGHT] or keys[pygame.K_d]:
+            self.direction = "RIGHT"
+            d_col = 1
+        elif keys[pygame.K_UP] or keys[pygame.K_w]:
+            self.direction = "UP"
+            d_row = -1
+        elif keys[pygame.K_DOWN] or keys[pygame.K_s]:
+            self.direction = "DOWN"
+            d_row = 1
+
+        if d_col != 0 or d_row != 0:
+            self.is_moving = True
+            if current_time - self.last_step_time >= self.step_delay:
+                self.move(d_col, d_row)
+                self.last_step_time = current_time
+        else:
+            self.is_moving = False
+
     def update_animation(self):
         if self.is_moving:
             self.frame_index += self.animation_speed
