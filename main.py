@@ -20,7 +20,7 @@ while running:
         if event.type == pygame.QUIT:
             running = False
         if event.type == pygame.MOUSEBUTTONDOWN:
-            if not play and play_button.get_rect(topleft=(300, 400)).collidepoint(event.pos):
+            if not play and play_button.get_rect(topleft=(200, 350)).collidepoint(event.pos):
                 play = True
             elif play and back.get_rect(topleft=(10,10)).collidepoint(event.pos):
                 play = False
@@ -28,7 +28,7 @@ while running:
     if not play:
         screen.fill((0, 0, 0))
         screen.blit(ant_logo, (300, 70))
-        screen.blit(play_button, (300, 400))
+        screen.blit(play_button, (200, 350))
         screen.blit(hack_club, (100, 190))
         screen.blit(credits, (200, 530))
     
