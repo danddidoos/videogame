@@ -94,7 +94,7 @@ class Ant(pygame.sprite.Sprite):
                 self.frame_index = 0.0
             self.is_moving = True
 
-    def draw(self, surface):
+    def draw(self, surface, fruit_counter):
         angles = {
             "RIGHT": -90,
             "DOWN": 180,
@@ -113,4 +113,8 @@ class Ant(pygame.sprite.Sprite):
                 self.row * TILE_SIZE + TILE_SIZE // 2
             )
         )
-        surface.blit(rotated, rect)
+        if fruit_counter >= 10:
+            #can we add code to make the ant 4x bigger
+            surface.blit(rotated, rect)
+        else:
+            surface.blit(rotated, rect)
