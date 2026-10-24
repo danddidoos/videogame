@@ -4,25 +4,28 @@ from constants import *
 class Ant(pygame.sprite.Sprite):
 
     def __init__(self, col, row):
+        super().__init__()
         self.col = col
         self.row = row
-        x = self.col * TILE_SIZE + TILE_SIZE // 2
-        y = self.row * TILE_SIZE + TILE_SIZE // 2
 
         self.direction = "RIGHT"
 
-        self.frames = []
+        self.walk_frames = []
         for i in range(1,5):
             frame = pygame.image.load(f"assets/ant/ant_walk_{i}.png").convert_alpha()
             frame = pygame.transform.scale(frame, (TILE_SIZE, TILE_SIZE))
-            self.frames.append(frame)
+            self.walk_frames.append(frame)
+
+        self.idle_frames = []
+        for i in range(1,5):
+            frame = pygame.image.load(f"assets/ant/ant_idle_{i}.png").convert_alpha()
+            frame = pygame.transform.scale(frame, (TILE_SIZE, TILE_SIZE))
+            self.idle_frames.append(frame)
 
         self.frame_index = 0.0
-        self.animation_speed = 0.1
+        self.walk_speed = 0.1
+        self.idle_speed = 0.05
         self.is_moving = False
-
-        self.image = self.frames[0]
-        self.rect = self.image.get_rect(center=(x, y))
 
         self.step_delay = 150
         self.last_step_time = 0
@@ -32,6 +35,7 @@ class Ant(pygame.sprite.Sprite):
         keys = pygame.key.get_pressed()
 
         d_col, d_row = 0, 0
+        was_moving = self.is_moving
 
         if keys[pygame.K_LEFT] or keys[pygame.K_a]:
             self.direction = "LEFT"
@@ -47,21 +51,31 @@ class Ant(pygame.sprite.Sprite):
             d_row = 1
 
         if d_col != 0 or d_row != 0:
-            self.is_moving = True
             if current_time - self.last_step_time >= self.step_delay:
                 self.move(d_col, d_row)
                 self.last_step_time = current_time
-        else:
-            self.is_moving = False
 
     def update_animation(self):
+        keys = pygame.key.get_pressed()
+        is_key_pressed = (
+            keys[pygame.K_LEFT] or keys[pygame.K_a] or
+            keys[pygame.K_RIGHT] or keys[pygame.K_d] or
+            keys[pygame.K_UP] or keys[pygame.K_w] or
+            keys[pygame.K_DOWN] or keys[pygame.K_s]
+        )
+
         if self.is_moving:
-            self.frame_index += self.animation_speed
-            if self.frame_index >= len(self.frames):
+            self.frame_index += self.walk_speed
+
+            if not is_key_pressed and self.frame_index >= 2.0:
                 self.frame_index = 0.0
                 self.is_moving = False
+            elif self.frame_index >= len(self.walk_frames):
+                self.frame_index = 0.0
         else:
-            self.frame_index = 0.0
+            self.frame_index += self.idle_speed
+            if self.frame_index >= len(self.idle_frames):
+                self.frame_index = 0.0
 
     def move(self, d_col, d_row):
         new_col = self.col + d_col
@@ -71,6 +85,7 @@ class Ant(pygame.sprite.Sprite):
             self.col = new_col
             self.row = new_row
             self.is_moving = True
+            self.frame_index = 0
 
     def draw(self, surface):
         angles = {
@@ -80,7 +95,8 @@ class Ant(pygame.sprite.Sprite):
             "UP": 0
         }
 
-        current_frame = self.frames[int(self.frame_index)]
+        active_frames = self.walk_frames if self.is_moving else self.idle_frames
+        current_frame = active_frames[int(self.frame_index)]
 
         rotated = pygame.transform.rotate(current_frame, angles.get(self.direction, 0))
 
