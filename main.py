@@ -24,7 +24,7 @@ def draw_grid(surface):
         for col in range(GRID_COLS):
             rect = pygame.Rect(col * TILE_SIZE, row * TILE_SIZE, TILE_SIZE, TILE_SIZE)
             base_color = (255, 255, 255)
-            pygame.draw.rect(surface, base_color)
+            pygame.draw.rect(surface, base_color, rect)
             pygame.draw.rect(surface, (0, 0, 0), rect, 1)
 
 
