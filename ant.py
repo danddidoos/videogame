@@ -106,15 +106,14 @@ class Ant(pygame.sprite.Sprite):
         current_frame = active_frames[int(self.frame_index)]
 
         rotated = pygame.transform.rotate(current_frame, angles.get(self.direction, 0))
-
+        if fruit_counter >= 10:
+            rotated = pygame.transform.scale_by(rotated, 4)
         rect = rotated.get_rect(
-            center=(
-                self.col * TILE_SIZE + TILE_SIZE // 2,
-                self.row * TILE_SIZE + TILE_SIZE // 2
+        center=(
+            self.col * TILE_SIZE + TILE_SIZE // 2,
+            self.row * TILE_SIZE + TILE_SIZE // 2
             )
         )
-        if fruit_counter >= 10:
-            #can we add code to make the ant 4x bigger
-            surface.blit(rotated, rect)
-        else:
-            surface.blit(rotated, rect)
+        surface.blit(rotated, rect)
+        
+

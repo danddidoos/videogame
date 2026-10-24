@@ -11,12 +11,12 @@ clock = pygame.time.Clock()
 running = True
 play = False
 dead = False
+win = False
 fruit_counter = 0
 font = pygame.font.Font(None, 36)
 play_button = pygame.image.load("assets/play.png")
 hack_club = pygame.image.load("assets/hack_club.png")
 back = pygame.image.load("assets/back.png")
-ant_word = pygame.image.load("assets/ant.png")
 ant_logo = pygame.image.load("assets/ant_logo.png")
 credits = pygame.transform.scale(pygame.image.load("assets/credits.png"), (500, 150))
 
@@ -56,7 +56,7 @@ while running:
                 ant.col = 5
                 ant.row = 5
 
-    if not play and not dead:
+    if not play and not dead and not win:
         # Main Menu
         screen.fill((0, 0, 0))
         screen.blit(ant_logo, (550, 70))
@@ -64,7 +64,7 @@ while running:
         screen.blit(hack_club, (350, 190))
         screen.blit(credits, (450, 630))
     
-    elif not dead: 
+    elif not dead and not win: 
         # Game
         screen.fill((200, 200, 200))
         draw_grid(screen)
@@ -75,7 +75,6 @@ while running:
         if ant.col == fruit.col and ant.row == fruit.row:
             fruit.respawn(snake1.body, (ant.col, ant.row))
             fruit_counter +=1
-        screen.blit(ant_word, (300, 100))
         screen.blit(back, (10, 10))
         snake1.draw(screen)
         fruit.draw(screen)
@@ -83,7 +82,7 @@ while running:
         fruit_score_rect = fruit_score_surface.get_rect(topright=(SCREEN_WIDTH - 20, 20))
         screen.blit(fruit_score_surface, fruit_score_rect)
 
-    else:
+    elif not play and not win:
         #Death screen
         screen.fill((0, 0, 0))
         font = pygame.font.Font(None, 74)
@@ -92,9 +91,21 @@ while running:
         screen.blit(text, text_rect)
         screen.blit(back, (10, 10))
 
+    else:
+        #Victory screen
+        screen.fill((222, 221, 150))
+        font = pygame.font.Font(None, 74)
+        text = font.render("Victory!", True, (222, 175, 145))
+        text_rect = text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 ))
+        screen.blit(text, text_rect)
+        screen.blit(back, ((10,10)))
     if ant.col == snake1.col and ant.row == snake1.row:
-        play = False
-        dead = True
+        if fruit_counter >= 10:
+            win = True
+            play = False
+        else:
+            play = False
+            dead = True
 
     pygame.display.flip()
     clock.tick(60)
