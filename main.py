@@ -9,6 +9,7 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 clock = pygame.time.Clock()
 running = True
 play = False
+dead = False
 play_button = pygame.image.load("assets/play.png")
 hack_club = pygame.image.load("assets/hack_club.png")
 back = pygame.image.load("assets/back.png")
@@ -38,10 +39,15 @@ while running:
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if not play and play_button.get_rect(topleft=(450, 450)).collidepoint(event.pos):
                 play = True
-            elif play and back.get_rect(topleft=(10,10)).collidepoint(event.pos):
+                snake1.reset(0, 0)
+            elif play and back.get_rect(topleft=(10,10)).collidepoint(event.pos) or dead and back.get_rect(topleft=(10,10)).collidepoint(event.pos):
                 play = False
+                dead = False
+                snake1.reset(0, 0)
+                ant.col = 5
+                ant.row = 5
 
-    if not play:
+    if not play and not dead:
         # Main Menu
         screen.fill((0, 0, 0))
         screen.blit(ant_logo, (550, 70))
@@ -49,7 +55,7 @@ while running:
         screen.blit(hack_club, (350, 190))
         screen.blit(credits, (450, 630))
     
-    else: 
+    elif not dead: 
         # Game
         screen.fill((200, 200, 200))
         draw_grid(screen)
@@ -60,6 +66,19 @@ while running:
         screen.blit(ant_word, (300, 100))
         screen.blit(back, (10, 10))
         snake1.draw(screen)
+
+    else:
+        #Death screen
+        screen.fill((0, 0, 0))
+        font = pygame.font.Font(None, 74)
+        text = font.render("Game Over", True, (255, 0, 0))
+        text_rect = text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2))
+        screen.blit(text, text_rect)
+        screen.blit(back, (10, 10))
+
+    if ant.col == snake1.col and ant.row == snake1.row:
+        play = False
+        dead = True
 
     pygame.display.flip()
     clock.tick(60)

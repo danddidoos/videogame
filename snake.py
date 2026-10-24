@@ -2,12 +2,12 @@ import pygame
 from constants import *
 
 class Snake:
-    def __init__(self, start_col=0, start_row=0,length=20,move_delay=200):
+    def __init__(self, start_col=0, start_row=0, length=20, move_delay=200):
         self.length = length
         self.move_delay = move_delay
         self.last_move_time = 0
 
-        self.body =[]
+        self.body = []
         for i in range(length):
             c = max(0, start_col - i)
             self.body.append((c, start_row))
@@ -21,6 +21,10 @@ class Snake:
     @property
     def row(self):
         return self.body[0][1]
+
+    def set_pos(self, col, row):
+        self.body[0] = (col, row)
+
     def chase(self, target):
         current_time=pygame.time.get_ticks()
         if current_time - self.last_move_time < self.move_delay:
@@ -67,3 +71,10 @@ class Snake:
                 surface.blit(self.head_image, (pixel_x, pixel_y))
             else:
                 surface.blit(self.body_image, (pixel_x, pixel_y))
+
+    def reset(self, start_col=0, start_row=0):
+        self.body = []
+        for i in range(self.length):
+            c = max(0, start_col - i)
+            self.body.append((c, start_row))
+        self.last_move_time = 0
