@@ -18,27 +18,24 @@ while running:
         if event.type == pygame.QUIT:
             running = False
         if event.type == pygame.MOUSEBUTTONDOWN:
-            if play_button.get_rect(topleft=(300, 400)).collidepoint(event.pos):
+            if not play and play_button.get_rect(topleft=(300, 400)).collidepoint(event.pos):
                 play = True
+            elif play and back.get_rect(topleft=(10,10)).collidepoint(event.pos):
+                play = False
 
-    screen.fill((0, 0, 0))
-    screen.blit(ant_logo, (300, 70))
-    screen.blit(play_button, (300, 400))
-    screen.blit(hack_club, (100, 190))
-    screen.blit(credits, (200, 530))
-    pygame.display.flip()
-    clock.tick(60)
-    while play == True:
-        for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    running = False
-                    play = False
-                if event.type == pygame.MOUSEBUTTONDOWN:
-                     if back.get_rect(topleft=(10,10)).collidepoint(event.pos):
-                          play = False
+    if not play:
+        screen.fill((0, 0, 0))
+        screen.blit(ant_logo, (300, 70))
+        screen.blit(play_button, (300, 400))
+        screen.blit(hack_club, (100, 190))
+        screen.blit(credits, (200, 530))
+    
+    else:                
         screen.fill((200, 200, 200))
         screen.blit(ant_word, (300, 100))
         screen.blit(back, (10, 10))
-        pygame.display.flip()
+        
+    pygame.display.flip()
+    clock.tick(60)
 
 pygame.quit()
