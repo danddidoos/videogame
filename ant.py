@@ -27,7 +27,7 @@ class Ant(pygame.sprite.Sprite):
         self.idle_speed = 0.05
         self.is_moving = False
 
-        self.step_delay = 150
+        self.step_delay = 200
         self.last_step_time = 0
 
     def handle_held_movement(self):

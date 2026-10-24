@@ -2,7 +2,7 @@ import pygame
 from constants import *
 
 class Snake:
-    def __init__(self, start_col=1, start_row=0, length=14, move_delay=300):
+    def __init__(self, start_col=1, start_row=0, length=14, move_delay=250):
         self.length = length
         self.move_delay = move_delay
         self.last_move_time = 0
