@@ -18,7 +18,7 @@ class Ant(pygame.sprite.Sprite):
             self.frames.append(frame)
 
         self.frame_index = 0.0
-        self.animation_speed = 0.15
+        self.animation_speed = 0.25
         self.is_moving = False
 
         self.image = self.frames[0]
