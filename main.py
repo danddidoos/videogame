@@ -16,6 +16,7 @@ ant_word = pygame.image.load("assets/ant.png")
 ant_logo = pygame.image.load("assets/ant_logo.png")
 credits = pygame.transform.scale(pygame.image.load("assets/credits.png"), (500, 50))
 
+
 ant = Ant(col=5, row=5)
 
 def draw_grid(surface):
@@ -29,6 +30,7 @@ def draw_grid(surface):
 
 snake1 = Snake()
 while running:
+    clock = pygame.time.Clock()
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
