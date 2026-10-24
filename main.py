@@ -14,7 +14,7 @@ hack_club = pygame.image.load("assets/hack_club.png")
 back = pygame.image.load("assets/back.png")
 ant_word = pygame.image.load("assets/ant.png")
 ant_logo = pygame.image.load("assets/ant_logo.png")
-credits = pygame.transform.scale(pygame.image.load("assets/credits.png"), (600, 150))
+credits = pygame.transform.scale(pygame.image.load("assets/credits.png"), (500, 150))
 
 
 ant = Ant(col=5, row=5)
@@ -47,7 +47,7 @@ while running:
         screen.blit(ant_logo, (550, 70))
         screen.blit(play_button, (450, 450))
         screen.blit(hack_club, (350, 190))
-        screen.blit(credits, (350, 630))
+        screen.blit(credits, (450, 630))
     
     else: 
         # Game
