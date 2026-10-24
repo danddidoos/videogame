@@ -10,12 +10,12 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 clock = pygame.time.Clock()
 running = True
 play = False
-play_button = pygame.image.load("play.png")
-hack_club = pygame.image.load("hack_club.png")
-back = pygame.image.load("back.png")
-ant_word = pygame.image.load("ant.png")
-ant_logo = pygame.image.load("ant_logo.png")
-credits = pygame.transform.scale(pygame.image.load("credits.png"), (500, 50))
+play_button = pygame.image.load("assets/play.png")
+hack_club = pygame.image.load("assets/hack_club.png")
+back = pygame.image.load("assets/back.png")
+ant_word = pygame.image.load("assets/ant.png")
+ant_logo = pygame.image.load("assets/ant_logo.png")
+credits = pygame.transform.scale(pygame.image.load("assets/credits.png"), (500, 50))
 
 ant = Ant(col=5, row=5)
 
