@@ -1,6 +1,7 @@
 import pygame 
 
 pygame.init()
+pygame.display.set_caption("ANT")
 screen = pygame.display.set_mode((800, 600))
 clock = pygame.time.Clock()
 running = True
