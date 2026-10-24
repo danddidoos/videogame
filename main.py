@@ -65,6 +65,7 @@ while running:
     else: 
         screen.fill((200, 200, 200))
         draw_grid(screen)
+        ant.update_animation()
         ant.draw(screen)
         snake1.chase(ant)
         screen.blit(ant_word, (300, 100))
