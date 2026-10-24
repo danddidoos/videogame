@@ -12,8 +12,8 @@ class Snake:
             c = max(0, start_col - i)
             self.body.append((c, start_row))
 
-        self.raw_image = pygame.image.load("assets/snake.png").convert_alpha()
-        self.image = pygame.transform.scale(self.raw_image, (TILE_SIZE, TILE_SIZE))
+        self.head_image = pygame.transform.scale(pygame.image.load("assets/snake.png").convert_alpha(), (TILE_SIZE, TILE_SIZE))
+        self.body_image = pygame.transform.scale(pygame.image.load("assets/snake_body.png").convert_alpha(), (TILE_SIZE, TILE_SIZE))
 
     @property
     def col(self):
@@ -49,7 +49,10 @@ class Snake:
                 self.body.pop()
 
     def draw(self, surface):
-        for col, row in self.body:
+        for i, (col, row) in enumerate(self.body):
             pixel_x = col * TILE_SIZE
             pixel_y = row * TILE_SIZE
-            surface.blit(self.image, (pixel_x, pixel_y))
+            if i == 0:
+                surface.blit(self.head_image, (pixel_x, pixel_y))
+            else:
+                surface.blit(self.body_image, (pixel_x, pixel_y))
