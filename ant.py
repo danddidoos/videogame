@@ -14,7 +14,7 @@ class Ant(pygame.sprite.Sprite):
         self.frames = []
         for i in range(1,5):
             frame = pygame.image.load(f"assets/ant/ant_walk_{i}.png").convert_alpha()
-            frame = pygame.transform.scale(frame, (40, 40))
+            frame = pygame.transform.scale(frame, (TILE_SIZE, TILE_SIZE))
             self.frames.append(frame)
 
         self.frame_index = 0.0
