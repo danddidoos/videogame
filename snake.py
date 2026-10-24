@@ -12,8 +12,8 @@ class Snake:
             c = max(0, start_col - i)
             self.body.append((c, start_row))
 
-        self.head_image = pygame.transform.scale(pygame.image.load("assets/snake.png").convert_alpha(), (TILE_SIZE, TILE_SIZE))
-        self.body_image = pygame.transform.scale(pygame.image.load("assets/snake_body.png").convert_alpha(), (TILE_SIZE, TILE_SIZE))
+        self.head_image = pygame.transform.scale(pygame.image.load("assets/snake/snake_head.png").convert_alpha(), (TILE_SIZE, TILE_SIZE))
+        self.body_image = pygame.transform.scale(pygame.image.load("assets/snake/snake_body_line.png").convert_alpha(), (TILE_SIZE, TILE_SIZE))
 
     @property
     def col(self):
