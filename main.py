@@ -13,6 +13,8 @@ ant_logo = pygame.image.load("ant_logo.png")
 credits = pygame.transform.scale(pygame.image.load("credits.png"), (500, 50))
 
 
+
+
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -37,5 +39,6 @@ while running:
         
     pygame.display.flip()
     clock.tick(60)
+
 
 pygame.quit()
