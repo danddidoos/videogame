@@ -14,7 +14,7 @@ hack_club = pygame.image.load("assets/hack_club.png")
 back = pygame.image.load("assets/back.png")
 ant_word = pygame.image.load("assets/ant.png")
 ant_logo = pygame.image.load("assets/ant_logo.png")
-credits = pygame.transform.scale(pygame.image.load("assets/credits.png"), (500, 50))
+credits = pygame.transform.scale(pygame.image.load("assets/credits.png"), (600, 150))
 
 
 ant = Ant(col=5, row=5)
@@ -36,7 +36,7 @@ while running:
             running = False
 
         elif event.type == pygame.MOUSEBUTTONDOWN:
-            if not play and play_button.get_rect(topleft=(200, 350)).collidepoint(event.pos):
+            if not play and play_button.get_rect(topleft=(450, 450)).collidepoint(event.pos):
                 play = True
             elif play and back.get_rect(topleft=(10,10)).collidepoint(event.pos):
                 play = False
@@ -44,10 +44,10 @@ while running:
     if not play:
         # Main Menu
         screen.fill((0, 0, 0))
-        screen.blit(ant_logo, (300, 70))
-        screen.blit(play_button, (200, 350))
-        screen.blit(hack_club, (100, 190))
-        screen.blit(credits, (200, 530))
+        screen.blit(ant_logo, (550, 70))
+        screen.blit(play_button, (450, 450))
+        screen.blit(hack_club, (350, 190))
+        screen.blit(credits, (350, 630))
     
     else: 
         # Game
