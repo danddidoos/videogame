@@ -56,6 +56,7 @@ while running:
 
     draw_grid(screen)
     ant.draw(screen)
+    snake1.chase(ant)
 
     if not play:
         screen.fill((0, 0, 0))
@@ -74,4 +75,3 @@ while running:
 
 
 pygame.quit()
-sys.exit()
