@@ -10,12 +10,12 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 clock = pygame.time.Clock()
 running = True
 play = False
-play_button = pygame.image.load("play.png")
-hack_club = pygame.image.load("hack_club.png")
-back = pygame.image.load("back.png")
-ant_word = pygame.image.load("ant.png")
-ant_logo = pygame.image.load("ant_logo.png")
-credits = pygame.transform.scale(pygame.image.load("credits.png"), (500, 50))
+play_button = pygame.image.load("assets/play.png")
+hack_club = pygame.image.load("assets/hack_club.png")
+back = pygame.image.load("assets/back.png")
+ant_word = pygame.image.load("assets/ant.png")
+ant_logo = pygame.image.load("assets/ant_logo.png")
+credits = pygame.transform.scale(pygame.image.load("assets/credits.png"), (500, 50))
 
 ant = Ant(col=5, row=5)
 
@@ -52,7 +52,7 @@ while running:
                 ant.move(0, -1)
             elif event.key in (pygame.K_DOWN, pygame.K_s):
                 ant.direction = "DOWN"
-                ant.move(0, 1)
+                ant.move(0, 1)    
 
     if not play:
         screen.fill((0, 0, 0))
@@ -64,6 +64,7 @@ while running:
     else: 
         draw_grid(screen)
         ant.draw(screen)
+        snake1.chase(ant)
         screen.fill((200, 200, 200))
         screen.blit(ant_word, (300, 100))
         screen.blit(back, (10, 10))
@@ -72,5 +73,5 @@ while running:
     pygame.display.flip()
     clock.tick(60)
 
+
 pygame.quit()
-sys.exit()
