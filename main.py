@@ -54,9 +54,6 @@ while running:
                 ant.direction = "DOWN"
                 ant.move(0, 1)
 
-    draw_grid(screen)
-    ant.draw(screen)
-
     if not play:
         screen.fill((0, 0, 0))
         screen.blit(ant_logo, (300, 70))
@@ -64,14 +61,16 @@ while running:
         screen.blit(hack_club, (100, 190))
         screen.blit(credits, (200, 530))
     
-    else:                
+    else: 
+        draw_grid(screen)
+        ant.draw(screen)
         screen.fill((200, 200, 200))
         screen.blit(ant_word, (300, 100))
         screen.blit(back, (10, 10))
         snake1.draw(screen)
+
     pygame.display.flip()
     clock.tick(60)
-
 
 pygame.quit()
 sys.exit()

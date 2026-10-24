@@ -11,7 +11,8 @@ class Ant(pygame.sprite.Sprite):
 
         self.direction = "RIGHT"
         # Temp code to be replaced when the actual ant image is made
-        self.original_image = pygame.Surface((40,20), pygame.SRCALPHA)
+        self.original_image = pygame.image.load("assets/ant.png").convert_alpha()
+        self.original_image = pygame.transform.scale(self.original_image, (40, 40))
         self.image = self.original_image
         self.rect = self.image.get_rect(center=(x, y))
 
