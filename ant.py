@@ -30,10 +30,10 @@ class Ant(pygame.sprite.Sprite):
         pixel_y = self.row * TILE_SIZE + 3
 
         angles = {
-            "RIGHT": 0,
-            "DOWN": -90,
-            "LEFT": 180,
-            "UP": 90
+            "RIGHT": -90,
+            "DOWN": 180,
+            "LEFT": 90,
+            "UP": 0
         }
 
         rotated = pygame.transform.rotate(self.image, angles.get(self.direction, 0))
