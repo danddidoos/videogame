@@ -1,8 +1,11 @@
 import pygame 
+import sys
+from constants import *
+from ant import Ant
 
 pygame.init()
 pygame.display.set_caption("ANT")
-screen = pygame.display.set_mode((800, 600))
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 clock = pygame.time.Clock()
 running = True
 play = False
@@ -13,18 +16,43 @@ ant_word = pygame.image.load("ant.png")
 ant_logo = pygame.image.load("ant_logo.png")
 credits = pygame.transform.scale(pygame.image.load("credits.png"), (500, 50))
 
+ant = Ant(col=5, row=5)
 
-
+def draw_grid(surface):
+    for row in range(GRID_ROWS):
+        for col in range(GRID_COLS):
+            rect = pygame.Rect(col * TILE_SIZE, row * TILE_SIZE, TILE_SIZE, TILE_SIZE)
+            base_color = (255, 255, 255)
+            pygame.draw.rect(surface, base_color)
+            pygame.draw.rect(surface, (0, 0, 0), rect, 1)
 
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-        if event.type == pygame.MOUSEBUTTONDOWN:
+
+        elif event.type == pygame.MOUSEBUTTONDOWN:
             if not play and play_button.get_rect(topleft=(200, 350)).collidepoint(event.pos):
                 play = True
             elif play and back.get_rect(topleft=(10,10)).collidepoint(event.pos):
                 play = False
+
+        elif event.type == pygame.KEYDOWN:
+            if event.key in (pygame.K_LEFT, pygame.K_a):
+                ant.direction = "LEFT"
+                ant.move(-1, 0)
+            elif event.key in (pygame.K_RIGHT, pygame.K_d):
+                ant.direction = "RIGHT"
+                ant.move(1, 0)
+            elif event.key in (pygame.K_UP, pygame.K_w):
+                ant.direction = "UP"
+                ant.move(0, -1)
+            elif event.key in (pygame.K_DOWN, pygame.K_s):
+                ant.direction = "DOWN"
+                ant.move(0, 1)
+
+    draw_grid(screen)
+    ant.draw(screen)
 
     if not play:
         screen.fill((0, 0, 0))
@@ -43,3 +71,4 @@ while running:
 
 
 pygame.quit()
+sys.exit()
