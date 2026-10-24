@@ -2,7 +2,7 @@ import pygame
 from constants import *
 
 class Snake:
-    def __init__(self, start_col=0, start_row=0,length=20,move_delay=300):
+    def __init__(self, start_col=0, start_row=0,length=20,move_delay=200):
         self.length = length
         self.move_delay = move_delay
         self.last_move_time = 0
@@ -26,20 +26,30 @@ class Snake:
         if current_time - self.last_move_time < self.move_delay:
             return
         head_col, head_row = self.body[0]
-        possible_moves = []
+        target_moves = []
         if target.col < head_col:
-            possible_moves.append((head_col - 1, head_row))
+            target_moves.append((head_col -1, head_row))
         elif target.col > head_col:
-            possible_moves.append((head_col + 1, head_row))
+            target_moves.append((head_col + 1, head_row))
         if target.row < head_row:
-            possible_moves.append((head_col, head_row - 1))
+            target_moves.append((head_col, head_row - 1))
         elif target.row > head_row:
-            possible_moves.append((head_col, head_row + 1))
+            target_moves.append((head_col, head_row + 1))
+
+        all_neighbours = [
+            (head_col + 1, head_row),
+            (head_col - 1, head_row),
+            (head_col, head_row + 1),
+            (head_col, head_row - 1)
+        ]
+
+        move_candidates = target_moves + [m for m in all_neighbours if m not in target_moves]
+
         chosen_move = None
-        for move in possible_moves:
-            c, r = move
-            if 0 <= c < GRID_COLS and 0 <= r < GRID_ROWS:
-                if (c, r) not in self.body[:-1]:
+        for move in move_candidates:
+            col, row = move
+            if 0 <= col < GRID_COLS and 0 <= row < GRID_ROWS:
+                if (col, row) not in self.body[:-1]:
                     chosen_move = move
                     break
         if chosen_move:
@@ -47,6 +57,7 @@ class Snake:
             self.body.insert(0, chosen_move)
             if len(self.body) > self.length:
                 self.body.pop()
+
 
     def draw(self, surface):
         for i, (col, row) in enumerate(self.body):
