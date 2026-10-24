@@ -1,5 +1,7 @@
-import pygame 
+import pygame
 
+from snake import Snake 
+import snake
 pygame.init()
 pygame.display.set_caption("ANT")
 screen = pygame.display.set_mode((800, 600))
@@ -15,7 +17,7 @@ credits = pygame.transform.scale(pygame.image.load("credits.png"), (500, 50))
 
 
 
-
+snake1 = Snake()
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -37,7 +39,7 @@ while running:
         screen.fill((200, 200, 200))
         screen.blit(ant_word, (300, 100))
         screen.blit(back, (10, 10))
-        
+        snake1.draw(screen)
     pygame.display.flip()
     clock.tick(60)
 
