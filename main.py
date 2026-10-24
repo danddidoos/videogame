@@ -99,6 +99,7 @@ while running:
         text_rect = text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 ))
         screen.blit(text, text_rect)
         screen.blit(back, ((10,10)))
+        
     if ant.col == snake1.col and ant.row == snake1.row:
         if fruit_counter >= 10:
             win = True
