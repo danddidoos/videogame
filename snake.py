@@ -1,5 +1,6 @@
 import pygame
 from constants import *
+from resources import resource_path
 
 class Snake:
     def __init__(self, start_col=1, start_row=0, length=14, move_delay=300):
@@ -11,10 +12,10 @@ class Snake:
 
         self.body = [(start_col - i, start_row) for i in range(length)]
 
-        self.head_image = pygame.transform.scale(pygame.image.load("assets/snake/snake_head.png").convert_alpha(), (TILE_SIZE, TILE_SIZE))
-        self.body_image = pygame.transform.scale(pygame.image.load("assets/snake/snake_body_line.png").convert_alpha(), (TILE_SIZE, TILE_SIZE))
-        self.bend_image = pygame.transform.scale(pygame.image.load("assets/snake/snake_body_bend.png").convert_alpha(), (TILE_SIZE, TILE_SIZE))
-        self.tail_image = pygame.transform.scale(pygame.image.load("assets/snake/snake_tail.png").convert_alpha(), (TILE_SIZE, TILE_SIZE))
+        self.head_image = pygame.transform.scale(pygame.image.load(resource_path("assets/snake/snake_head.png")).convert_alpha(), (TILE_SIZE, TILE_SIZE))
+        self.body_image = pygame.transform.scale(pygame.image.load(resource_path("assets/snake/snake_body_line.png")).convert_alpha(), (TILE_SIZE, TILE_SIZE))
+        self.bend_image = pygame.transform.scale(pygame.image.load(resource_path("assets/snake/snake_body_bend.png")).convert_alpha(), (TILE_SIZE, TILE_SIZE))
+        self.tail_image = pygame.transform.scale(pygame.image.load(resource_path("assets/snake/snake_tail.png")).convert_alpha(), (TILE_SIZE, TILE_SIZE))
 
     @property
     def col(self):
