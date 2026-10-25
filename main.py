@@ -144,12 +144,15 @@ while running:
         snake1.chase(ant)
 
         # Check if fruit has been eaten
-        if ant.col == fruit.col and ant.row == fruit.row:
-            if fruit.fruit_type == "apple":
+        ant_eaten_fruit = (ant.col == fruit.col and ant.row == fruit.row)
+        snake_eaten_fruit = ((fruit.col, fruit.row) in snake1.body)
+        if ant_eaten_fruit or snake_eaten_fruit:
+            if fruit.fruit_type == "apple" and ant_eaten_fruit:
                 # Enable power up (increase ant speed for 5 seconds)
                 ant.enable_speed_up()
             respawn_fruit(snake1, ant)
-            fruit_counter += 1
+            if ant_eaten_fruit:
+                fruit_counter += 1
 
             # Check if level has been completed
             if fruit_counter >= levels[current_level]["required_fruit"]:
