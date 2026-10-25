@@ -15,6 +15,7 @@ win = False
 rules = False
 fruit_counter = 0
 font = pygame.font.Font(None, 36)
+large_font = pygame.font.Font(None, 74)
 play_button = pygame.transform.scale(pygame.image.load("assets/menu/playbutton_unpressed.png"), (1000, 800))
 play_button_hovered= pygame.transform.scale(pygame.image.load("assets/menu/playbutton_hovered.png"), (1000, 800))
 hack_club = pygame.image.load("assets/hack_club.png")
@@ -94,8 +95,7 @@ while running:
     elif not play and not win and not rules:
         # Death screen
         screen.fill((0, 0, 0))
-        font = pygame.font.Font(None, 74)
-        text = font.render("Game Over", True, (255, 0, 0))
+        text = large_font.render("Game Over", True, (255, 0, 0))
         text_rect = text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2))
         screen.blit(text, text_rect)
         screen.blit(back, (10, 10))
@@ -103,8 +103,7 @@ while running:
     elif not play and not dead and not rules:
         # Victory screen
         screen.fill((222, 221, 150))
-        font = pygame.font.Font(None, 74)
-        text = font.render("Victory!", True, (222, 175, 145))
+        text = large_font.render("Victory!", True, (222, 175, 145))
         text_rect = text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 ))
         screen.blit(text, text_rect)
         screen.blit(back, ((10,10)))
