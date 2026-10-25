@@ -55,13 +55,10 @@ large_font = pygame.font.Font(None, 74)
 
 play_button = pygame.transform.scale(pygame.image.load(resource_path("assets/menu/playbutton_unpressed.png")), (1000, 800))
 play_button_hovered = pygame.transform.scale(pygame.image.load(resource_path("assets/menu/playbutton_hovered.png")), (1000, 800))
-hack_club = pygame.image.load(resource_path("assets/hack_club.png"))
 back = pygame.image.load(resource_path("assets/back.png"))
-ant_logo = pygame.image.load(resource_path("assets/ant_logo.png"))
-credits = pygame.transform.scale(pygame.image.load(resource_path("assets/credits.png")), (500, 150))
 rules_button = pygame.transform.scale(pygame.image.load(resource_path("assets/menu/rulesbutton_unpressed.png")), (1000,800))
 rules_button_hovered = pygame.transform.scale(pygame.image.load(resource_path("assets/menu/rulesbutton_hovered.png")), (1000, 800))
-rules_background = pygame.image.load(resource_path("assets/rules_background.png"))
+rules_background = pygame.image.load(resource_path("assets/background/rules_background.png"))
 game_background_frames = [
     pygame.transform.scale(
         pygame.image.load(resource_path(f"assets/background/background_{frame}.png")).convert(),
