@@ -1,5 +1,6 @@
 import pygame
 from constants import *
+from resources import resource_path
 
 class Ant(pygame.sprite.Sprite):
 
@@ -12,13 +13,13 @@ class Ant(pygame.sprite.Sprite):
 
         self.walk_frames = []
         for i in range(1,5):
-            frame = pygame.image.load(f"assets/ant/ant_walk_{i}.png").convert_alpha()
+            frame = pygame.image.load(resource_path(f"assets/ant/ant_walk_{i}.png")).convert_alpha()
             frame = pygame.transform.scale(frame, (TILE_SIZE, TILE_SIZE))
             self.walk_frames.append(frame)
 
         self.idle_frames = []
         for i in range(1,5):
-            frame = pygame.image.load(f"assets/ant/ant_idle_{i}.png").convert_alpha()
+            frame = pygame.image.load(resource_path(f"assets/ant/ant_idle_{i}.png")).convert_alpha()
             frame = pygame.transform.scale(frame, (TILE_SIZE, TILE_SIZE))
             self.idle_frames.append(frame)
 

@@ -4,6 +4,7 @@ from constants import *
 from ant import Ant
 from snake import Snake 
 from fruit import Fruit
+from resources import resource_path
 
 pygame.init()
 pygame.display.set_caption("ANT")
@@ -52,28 +53,28 @@ levels = {
 font = pygame.font.Font(None, 36)
 large_font = pygame.font.Font(None, 74)
 
-play_button = pygame.transform.scale(pygame.image.load("assets/menu/playbutton_unpressed.png"), (1000, 800))
-play_button_hovered= pygame.transform.scale(pygame.image.load("assets/menu/playbutton_hovered.png"), (1000, 800))
-hack_club = pygame.image.load("assets/hack_club.png")
-back = pygame.image.load("assets/back.png")
-ant_logo = pygame.image.load("assets/ant_logo.png")
-credits = pygame.transform.scale(pygame.image.load("assets/credits.png"), (500, 150))
-rules_button = pygame.transform.scale(pygame.image.load("assets/menu/rulesbutton_unpressed.png"), (1000,800))
-rules_button_hovered = pygame.transform.scale(pygame.image.load("assets/menu/rulesbutton_hovered.png"), (1000, 800))
-rules_background = pygame.image.load("assets/rules_background.png")
+play_button = pygame.transform.scale(pygame.image.load(resource_path("assets/menu/playbutton_unpressed.png")), (1000, 800))
+play_button_hovered= pygame.transform.scale(pygame.image.load(resource_path("assets/menu/playbutton_hovered.png")), (1000, 800))
+hack_club = pygame.image.load(resource_path("assets/hack_club.png"))
+back = pygame.image.load(resource_path("assets/back.png"))
+ant_logo = pygame.image.load(resource_path("assets/ant_logo.png"))
+credits = pygame.transform.scale(pygame.image.load(resource_path("assets/credits.png")), (500, 150))
+rules_button = pygame.transform.scale(pygame.image.load(resource_path("assets/menu/rulesbutton_unpressed.png")), (1000,800))
+rules_button_hovered = pygame.transform.scale(pygame.image.load(resource_path("assets/menu/rulesbutton_hovered.png")), (1000, 800))
+rules_background = pygame.image.load(resource_path("assets/rules_background.png"))
 game_background_frames = [
     pygame.transform.scale(
-        pygame.image.load(f"assets/background/background_{frame}.png").convert(),
+        pygame.image.load(resource_path(f"assets/background/background_{frame}.png")).convert(),
         (SCREEN_WIDTH, SCREEN_HEIGHT),
     )
     for frame in range(1, 3)
 ]
 game_background_frame_duration = 500
-title_screen = pygame.transform.scale(pygame.image.load("assets/menu/titlescreen.png"), (1320, 770))
-black = pygame.transform.scale(pygame.image.load("assets/black.png").convert_alpha(), (1320, 770))
+title_screen = pygame.transform.scale(pygame.image.load(resource_path("assets/menu/titlescreen.png")), (1320, 770))
+black = pygame.transform.scale(pygame.image.load(resource_path("assets/black.png")).convert_alpha(), (1320, 770))
 black.set_alpha(128)
-return_button = pygame.image.load("assets/return_home.png")
-resume_button = pygame.image.load("assets/resume.png")
+return_button = pygame.image.load(resource_path("assets/return_home.png"))
+resume_button = pygame.image.load(resource_path("assets/resume.png"))
 
 
 ant = Ant(col=5, row=5)

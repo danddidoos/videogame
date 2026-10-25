@@ -1,6 +1,7 @@
 import pygame
 import random
 from constants import *
+from resources import resource_path
 
 class Fruit:
     def __init__(self, fruit_type):
@@ -11,11 +12,11 @@ class Fruit:
 
     def set_type(self, fruit_type):
         if fruit_type == "banana":
-            self.image = pygame.transform.scale(pygame.image.load("assets/fruit/banana.png").convert_alpha(), (TILE_SIZE, TILE_SIZE))
+            self.image = pygame.transform.scale(pygame.image.load(resource_path("assets/fruit/banana.png")).convert_alpha(), (TILE_SIZE, TILE_SIZE))
         elif fruit_type == "apple":
-            self.image = pygame.transform.scale(pygame.image.load("assets/fruit/apple.png").convert_alpha(), (TILE_SIZE, TILE_SIZE))
+            self.image = pygame.transform.scale(pygame.image.load(resource_path("assets/fruit/apple.png")).convert_alpha(), (TILE_SIZE, TILE_SIZE))
         elif fruit_type == "pineapple":
-            self.image = pygame.transform.scale(pygame.image.load("assets/fruit/pineapple.png").convert_alpha(), (TILE_SIZE, TILE_SIZE))
+            self.image = pygame.transform.scale(pygame.image.load(resource_path("assets/fruit/pineapple.png")).convert_alpha(), (TILE_SIZE, TILE_SIZE))
         else:
             raise ValueError(f"Unknown fruit type: {fruit_type}")
         self.fruit_type = fruit_type
