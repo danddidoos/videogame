@@ -20,34 +20,29 @@ fruit_counter = 0
 current_level = 1
 levels = {
     1: {
-        "ant_step_delay": 200,
+        "ant_step_delay": 175,
         "snake_step_delay": 400,
         "required_fruit": 5,
     },
     2: {
-        "ant_step_delay": 225,
+        "ant_step_delay": 200,
         "snake_step_delay": 375,
         "required_fruit": 7
     },
     3: {
-        "ant_step_delay": 250,
+        "ant_step_delay": 225,
         "snake_step_delay": 350,
         "required_fruit": 9
     },
     4: {
-        "ant_step_delay": 275,
+        "ant_step_delay": 250,
         "snake_step_delay": 325,
         "required_fruit": 11
     },
     5: {
-        "ant_step_delay": 300,
+        "ant_step_delay": 275,
         "snake_step_delay": 300,
         "required_fruit": 13
-    },
-    6: {
-        "ant_step_delay": 325,
-        "snake_step_delay": 275,
-        "required_fruit": 15
     }
 }
 
