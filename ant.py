@@ -32,7 +32,7 @@ class Ant(pygame.sprite.Sprite):
         self.last_step_time = 0
         self.speed_up_end_time = 0
 
-    def handle_held_movement(self):
+    def handle_movement(self, snake):
         current_time = pygame.time.get_ticks()
         keys = pygame.key.get_pressed()
 
@@ -53,7 +53,7 @@ class Ant(pygame.sprite.Sprite):
 
         if d_col != 0 or d_row != 0:
             if current_time - self.last_step_time >= self.step_delay:
-                self.move(d_col, d_row)
+                self.move(d_col, d_row, snake)
                 self.last_step_time = current_time
 
     def update_animation(self):
@@ -85,11 +85,11 @@ class Ant(pygame.sprite.Sprite):
             if self.frame_index >= len(self.idle_frames):
                 self.frame_index = 0.0
 
-    def move(self, d_col, d_row):
+    def move(self, d_col, d_row, snake):
         new_col = self.col + d_col
         new_row = self.row + d_row
 
-        if 0 <= new_col < GRID_COLS and 0 <= new_row < GRID_ROWS:
+        if 0 <= new_col < GRID_COLS and 0 <= new_row < GRID_ROWS and (new_col, new_row) not in snake.body:
             self.col = new_col
             self.row = new_row
             if not self.is_moving:

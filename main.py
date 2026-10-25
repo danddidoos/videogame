@@ -93,7 +93,7 @@ while running:
         screen.fill((200, 200, 200))
         draw_grid(screen)
         ant.update_power_ups()
-        ant.handle_held_movement()
+        ant.handle_movement(snake1)
         ant.update_animation()
         ant.draw(screen, fruit_counter)
         snake1.chase(ant)
