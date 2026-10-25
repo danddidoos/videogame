@@ -23,8 +23,8 @@ class Ant(pygame.sprite.Sprite):
             self.idle_frames.append(frame)
 
         self.frame_index = 0.0
-        self.walk_speed = 0.1
-        self.idle_speed = 0.05
+        self.walk_animation_speed = 0.1
+        self.idle_animation_speed = 0.05
         self.is_moving = False
 
         self.initial_step_delay = 200
@@ -73,7 +73,7 @@ class Ant(pygame.sprite.Sprite):
         )
 
         if self.is_moving:
-            self.frame_index += self.walk_speed
+            self.frame_index += self.walk_animation_speed
 
             if not is_key_pressed and self.frame_index >= 2.0:
                 self.frame_index = 0.0
@@ -81,7 +81,7 @@ class Ant(pygame.sprite.Sprite):
             elif self.frame_index >= len(self.walk_frames):
                 self.frame_index = 0.0
         else:
-            self.frame_index += self.idle_speed
+            self.frame_index += self.idle_animation_speed
             if self.frame_index >= len(self.idle_frames):
                 self.frame_index = 0.0
 
@@ -121,7 +121,7 @@ class Ant(pygame.sprite.Sprite):
 
     def enable_speed_up(self):
         # Speed the ant up for 5 seconds
-        self.step_delay = 100
+        self.step_delay = self.initial_step_delay // 2
         self.speed_up_end_time = pygame.time.get_ticks() + 5000
 
     def update_power_ups(self):
