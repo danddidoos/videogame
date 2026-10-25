@@ -16,6 +16,8 @@ dead = False
 win = False
 rules = False
 pause = False
+hovered_play = False
+hovered_rules = False
 fruit_counter = 0
 
 current_level = 1
@@ -56,7 +58,8 @@ hack_club = pygame.image.load("assets/hack_club.png")
 back = pygame.image.load("assets/back.png")
 ant_logo = pygame.image.load("assets/ant_logo.png")
 credits = pygame.transform.scale(pygame.image.load("assets/credits.png"), (500, 150))
-rules_button = pygame.image.load("assets/rules_button.png")
+rules_button = pygame.transform.scale(pygame.image.load("assets/menu/rulesbutton_unpressed.png"), (1000,800))
+rules_button_hovered = pygame.transform.scale(pygame.image.load("assets/menu/rulesbutton_hovered.png"), (1000, 800))
 rules_background = pygame.image.load("assets/rules_background.png")
 game_background_frames = [
     pygame.transform.scale(
@@ -71,6 +74,7 @@ black = pygame.transform.scale(pygame.image.load("assets/black.png").convert_alp
 black.set_alpha(128)
 return_button = pygame.image.load("assets/return_home.png")
 resume_button = pygame.image.load("assets/resume.png")
+
 
 ant = Ant(col=5, row=5)
 snake1 = Snake()
@@ -135,8 +139,8 @@ while running:
 
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if not (play or pause or win or dead or rules) and \
-                play_button.get_bounding_rect().move(200,100).collidepoint(pygame.mouse.get_pos()) or \
-                play_button_hovered.get_bounding_rect().move(200,100).collidepoint(pygame.mouse.get_pos()):
+                play_button.get_bounding_rect().move(200,0).collidepoint(pygame.mouse.get_pos()) and hovered_play == True or \
+                play_button_hovered.get_bounding_rect().move(200,0).collidepoint(pygame.mouse.get_pos()) and hovered_play == True:
                 current_level = 1
                 load_level(current_level)
                 play = True
@@ -145,7 +149,7 @@ while running:
                 rules = False
 
 
-            elif (play or dead or win or rules or not pause) and back.get_rect(topleft=(10, 10)).collidepoint(event.pos):
+            elif not (play or pause) and back.get_rect(topleft=(10, 10)).collidepoint(event.pos):
                 play = False
                 dead = False
                 rules = False
@@ -155,7 +159,7 @@ while running:
                 ant.col = 5
                 ant.row = 5
 
-            elif not (play or win or pause) and rules_button.get_rect(topleft=(460,350)).collidepoint(event.pos):
+            elif not (play or win or pause) and rules_button.get_rect(topleft=(460,350)).collidepoint(event.pos) and hovered_rules == True:
                 rules = True
 
             elif pause and return_button.get_rect(topleft=(460,200)).collidepoint(event.pos):
@@ -182,12 +186,19 @@ while running:
     if not play and not dead and not win and not rules and not pause:
         # Main Menu
         screen.blit(title_screen, (0, 0))
-        if play_button.get_bounding_rect().move(200,100).collidepoint(pygame.mouse.get_pos()) or \
-            play_button_hovered.get_bounding_rect().move(200,100).collidepoint(pygame.mouse.get_pos()):
-            screen.blit(play_button_hovered, (200, 100))
+        if play_button.get_bounding_rect().move(200,0).collidepoint(pygame.mouse.get_pos()) or \
+            play_button_hovered.get_bounding_rect().move(200,0).collidepoint(pygame.mouse.get_pos()):
+            screen.blit(play_button_hovered, (200, 0))
+            hovered_play = True
         else:
-            screen.blit(play_button, (200, 100))
-        screen.blit(rules_button, (450, 700))
+            screen.blit(play_button, (200, 0))
+            hovered_play = False
+        if rules_button.get_bounding_rect().move(300, -10).collidepoint(pygame.mouse.get_pos()) or rules_button_hovered.get_bounding_rect().move(300,-10).collidepoint(pygame.mouse.get_pos()):
+            screen.blit(rules_button_hovered, (300, -10))
+            hovered_rules = True
+        else:
+            screen.blit(rules_button, (300,-10))
+            hovered_rules = False
     
     elif not dead and not win and not rules and not pause and play: 
         # Game
@@ -228,7 +239,6 @@ while running:
             dead = True
             play = False
             
-        screen.blit(back, (10, 10))
         draw_fruit(screen)
         snake1.draw(screen)
         draw_hud(screen)
