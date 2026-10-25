@@ -3,12 +3,20 @@ import random
 from constants import *
 
 class Fruit:
-    def __init__(self):
+    def __init__(self, fruit_type):
         self.col = 0
         self.row = 0
-
-        self.image = pygame.transform.scale(pygame.image.load("assets/fruit.png").convert_alpha(), (TILE_SIZE, TILE_SIZE))
+        self.set_type(fruit_type)
         self.respawn()
+
+    def set_type(self, fruit_type):
+        if fruit_type == "banana":
+            self.image = pygame.transform.scale(pygame.image.load("assets/banana.png").convert_alpha(), (TILE_SIZE, TILE_SIZE))
+        elif fruit_type == "apple":
+            self.image = pygame.transform.scale(pygame.image.load("assets/apple.png").convert_alpha(), (TILE_SIZE, TILE_SIZE))
+        else:
+            raise ValueError(f"Unknown fruit type: {fruit_type}")
+        self.fruit_type = fruit_type
 
     def respawn(self, snake_body=None, ant_pos=None):
         if snake_body is None:

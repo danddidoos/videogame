@@ -27,8 +27,10 @@ class Ant(pygame.sprite.Sprite):
         self.idle_speed = 0.05
         self.is_moving = False
 
-        self.step_delay = 200
+        self.initial_step_delay = 200
+        self.step_delay = self.initial_step_delay
         self.last_step_time = 0
+        self.speed_up_end_time = 0
 
     def handle_held_movement(self):
         current_time = pygame.time.get_ticks()
@@ -117,3 +119,16 @@ class Ant(pygame.sprite.Sprite):
         surface.blit(rotated, rect)
         
 
+    def enable_speed_up(self):
+        # Speed the ant up for 5 seconds
+        self.step_delay = 100
+        self.speed_up_end_time = pygame.time.get_ticks() + 5000
+
+    def update_power_ups(self):
+        if self.speed_up_end_time == 0:
+            return
+
+        current_time = pygame.time.get_ticks()
+        if current_time >= self.speed_up_end_time:
+            self.step_delay = self.initial_step_delay
+            self.speed_up_end_time = 0

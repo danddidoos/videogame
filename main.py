@@ -1,4 +1,5 @@
 import pygame 
+import random
 from constants import *
 from ant import Ant
 from snake import Snake 
@@ -27,7 +28,20 @@ rules_background = pygame.image.load("assets/rules_background.png")
 title_screen = pygame.transform.scale(pygame.image.load("assets/menu/titlescreen.png"), (1320, 770))
 
 ant = Ant(col=5, row=5)
-fruit = Fruit()
+
+fruit = Fruit(fruit_type = "banana")
+
+def respawn_fruit(snake, ant):
+    global fruit
+    random_no = random.randint(0, 5)
+    if random_no == 0:
+        fruit.set_type("apple")
+    else:
+        fruit.set_type("banana")
+    fruit.respawn(snake.body, (ant.col, ant.row))
+
+def draw_fruit(screen):
+    fruit.draw(screen)
 
 def draw_grid(surface):
     for row in range(GRID_ROWS):
@@ -51,7 +65,7 @@ while running:
                 snake1.reset(0, 0)
                 ant.col = 5
                 ant.row = 5
-                fruit.respawn(snake1.body, (ant.col, ant.row))
+                respawn_fruit(snake1, ant)
                 fruit_counter = 0
 
             elif play and back.get_rect(topleft=(10,10)).collidepoint(event.pos) or dead and back.get_rect(topleft=(10,10)).collidepoint(event.pos) or win and back.get_rect(topleft=(10,10)).collidepoint(event.pos):
@@ -78,15 +92,20 @@ while running:
         # Game
         screen.fill((200, 200, 200))
         draw_grid(screen)
+        ant.update_power_ups()
         ant.handle_held_movement()
         ant.update_animation()
         ant.draw(screen, fruit_counter)
         snake1.chase(ant)
         if ant.col == fruit.col and ant.row == fruit.row:
-            fruit.respawn(snake1.body, (ant.col, ant.row))
-            fruit_counter +=1
+            if fruit.fruit_type == "apple":
+                # Enable power up (increase ant speed for 5 seconds)
+                ant.enable_speed_up()
+            respawn_fruit(snake1, ant)
+            fruit_counter += 1
+
         screen.blit(back, (10, 10))
-        fruit.draw(screen)
+        draw_fruit(screen)
         fruit_score_surface = font.render(f"Fruit Counter: {fruit_counter}", True, (0,0,0))
         fruit_score_rect = fruit_score_surface.get_rect(topright=(SCREEN_WIDTH - 20, 20))
         screen.blit(fruit_score_surface, fruit_score_rect)
