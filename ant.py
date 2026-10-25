@@ -97,7 +97,7 @@ class Ant(pygame.sprite.Sprite):
                 self.frame_index = 0.0
             self.is_moving = True
 
-    def draw(self, surface, fruit_counter):
+    def draw(self, surface, fruit_counter, level_fruits):
         angles = {
             "RIGHT": -90,
             "DOWN": 180,
@@ -109,8 +109,8 @@ class Ant(pygame.sprite.Sprite):
         current_frame = active_frames[int(self.frame_index)]
 
         rotated = pygame.transform.rotate(current_frame, angles.get(self.direction, 0))
-        if fruit_counter >= 10:
-            rotated = pygame.transform.scale_by(rotated, 4)
+        if fruit_counter >= level_fruits:
+            rotated = pygame.transform.scale_by(rotated, 3)
         rect = rotated.get_rect(
         center=(
             self.col * TILE_SIZE + TILE_SIZE // 2,

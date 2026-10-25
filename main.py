@@ -211,7 +211,7 @@ while running:
         ant.update_power_ups()
         ant.handle_movement(snake1)
         ant.update_animation()
-        ant.draw(screen, fruit_counter)
+        ant.draw(screen, fruit_counter, levels[current_level]["required_fruit"])
         snake1.update_power_ups()
         snake1.chase(ant)
 
@@ -229,6 +229,7 @@ while running:
             if ant_eaten_fruit:
                 fruit_counter += 1
 
+        if ant.col == snake1.col and ant.row == snake1.row:
             # Check if level has been completed
             if fruit_counter >= levels[current_level]["required_fruit"]:
                 if current_level in levels and (current_level + 1) in levels:
@@ -237,10 +238,9 @@ while running:
                 else:
                     win = True
                     play = False
-
-        if ant.col == snake1.col and ant.row == snake1.row:
-            dead = True
-            play = False
+            else:    
+                dead = True
+                play = False
             
         draw_fruit(screen)
         snake1.draw(screen)
@@ -277,7 +277,7 @@ while running:
         #Pause menu
         screen.fill((200, 200, 200))
         draw_grid(screen)
-        ant.draw(screen, fruit_counter)
+        ant.draw(screen, fruit_counter, levels[current_level]["required_fruit"])
         draw_fruit(screen)
         snake1.draw(screen)
         screen.blit(black, ((0,0)))
