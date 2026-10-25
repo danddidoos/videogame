@@ -157,7 +157,7 @@ while running:
             elif not (play or pause or win or dead or rules) and (
                 play_button.get_rect(topleft=(200, 0)).collidepoint(event.pos)
                 or play_button_hovered.get_rect(topleft=(200, 0)).collidepoint(event.pos)
-            ):
+            ) and hovered_rules == False and hovered_play == True:
                 current_level = 1
                 load_level(current_level)
                 play = True
