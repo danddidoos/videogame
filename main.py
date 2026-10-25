@@ -233,9 +233,6 @@ while running:
         snake1.draw(screen)
         draw_hud(screen)
 
-    elif not play and not win and not rules and not pause:
-        draw_hud(screen)
-
     elif dead:
         # Death screen
         screen.fill((0, 0, 0))
@@ -255,6 +252,9 @@ while running:
         screen.blit(text, text_rect)
         screen.blit(back, ((10,10)))
 
+    elif not play and not dead and not win and not rules and not pause:
+        draw_hud(screen)
+
     elif not play and not dead and not pause and not win and rules:
         # Rules screen
         screen.blit(rules_background, (0,0))
@@ -271,14 +271,6 @@ while running:
         draw_hud(screen)
         screen.blit(return_button, ((460,200)))
         screen.blit(resume_button,((460,400 )))
-
-    if ant.col == snake1.col and ant.row == snake1.row:
-        if fruit_counter >= 10:
-            win = True
-            play = False
-        else:
-            play = False
-            dead = True
 
     pygame.display.flip()
     clock.tick(60)
