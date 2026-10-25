@@ -121,7 +121,7 @@ class Ant(pygame.sprite.Sprite):
 
     def enable_speed_up(self):
         # Speed the ant up for 5 seconds
-        self.step_delay = self.initial_step_delay // 2
+        self.step_delay = self.initial_step_delay // (7/4)
         self.speed_up_end_time = pygame.time.get_ticks() + 5000
 
     def update_power_ups(self):

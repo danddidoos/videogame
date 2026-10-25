@@ -4,8 +4,10 @@ from constants import *
 class Snake:
     def __init__(self, start_col=1, start_row=0, length=14, move_delay=300):
         self.length = length
-        self.move_delay = move_delay
+        self.initial_move_delay = move_delay
+        self.move_delay = self.initial_move_delay
         self.last_move_time = 0
+        self.slow_down_end_time = 0
 
         self.body = [(start_col - i, start_row) for i in range(length)]
 
@@ -176,6 +178,20 @@ class Snake:
                         element = self.body_image
 
             surface.blit(element, (pixel_x, pixel_y))
+
+    def enable_slow_down(self):
+        # Slow down the snakes for 5 seconds
+        self.move_delay = self.initial_move_delay * 2
+        self.slow_down_end_time = pygame.time.get_ticks() + 5000
+
+    def update_power_ups(self):
+        if self.slow_down_end_time == 0:
+            return
+
+        current_time = pygame.time.get_ticks()
+        if current_time >= self.slow_down_end_time:
+            self.move_delay = self.initial_move_delay
+            self.slow_down_end_time = 0
 
     def reset(self, start_col=0, start_row=0):
         if start_col == 0:

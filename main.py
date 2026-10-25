@@ -68,6 +68,8 @@ def respawn_fruit(snake, ant):
     random_no = random.randint(0, 5)
     if random_no == 0:
         fruit.set_type("apple")
+    elif random_no == 1:
+        fruit.set_type("pineapple")
     else:
         fruit.set_type("banana")
     fruit.respawn(snake.body, (ant.col, ant.row))
@@ -88,7 +90,8 @@ def load_level(level_no):
     level_settings = levels[level_no]
 
     ant.step_delay = level_settings["ant_step_delay"]
-    snake1.move_delay = level_settings["snake_step_delay"]
+    snake1.initial_move_delay = level_settings["snake_step_delay"]
+    snake1.move_delay = snake1.initial_move_delay
 
     ant.col = 5
     ant.row = 5
@@ -141,6 +144,7 @@ while running:
         ant.handle_movement(snake1)
         ant.update_animation()
         ant.draw(screen, fruit_counter)
+        snake1.update_power_ups()
         snake1.chase(ant)
 
         # Check if fruit has been eaten
@@ -150,6 +154,9 @@ while running:
             if fruit.fruit_type == "apple" and ant_eaten_fruit:
                 # Enable power up (increase ant speed for 5 seconds)
                 ant.enable_speed_up()
+            elif fruit.fruit_type == "pineapple" and ant_eaten_fruit:
+                # Enable power up (increase ant speed for 5 seconds)
+                snake1.enable_slow_down()
             respawn_fruit(snake1, ant)
             if ant_eaten_fruit:
                 fruit_counter += 1
