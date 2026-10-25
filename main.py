@@ -54,7 +54,7 @@ font = pygame.font.Font(None, 36)
 large_font = pygame.font.Font(None, 74)
 
 play_button = pygame.transform.scale(pygame.image.load(resource_path("assets/menu/playbutton_unpressed.png")), (1000, 800))
-play_button_hovered= pygame.transform.scale(pygame.image.load(resource_path("assets/menu/playbutton_hovered.png")), (1000, 800))
+play_button_hovered = pygame.transform.scale(pygame.image.load(resource_path("assets/menu/playbutton_hovered.png")), (1000, 800))
 hack_club = pygame.image.load(resource_path("assets/hack_club.png"))
 back = pygame.image.load(resource_path("assets/back.png"))
 ant_logo = pygame.image.load(resource_path("assets/ant_logo.png"))
@@ -73,8 +73,10 @@ game_background_frame_duration = 500
 title_screen = pygame.transform.scale(pygame.image.load(resource_path("assets/menu/titlescreen.png")), (1320, 770))
 black = pygame.transform.scale(pygame.image.load(resource_path("assets/black.png")).convert_alpha(), (1320, 770))
 black.set_alpha(128)
-return_button = pygame.image.load(resource_path("assets/return_home.png"))
-resume_button = pygame.image.load(resource_path("assets/resume.png"))
+return_button = pygame.transform.scale(pygame.image.load(resource_path("assets/pausemenu/homebutton.png")), (400, 164))
+resume_button = pygame.transform.scale(pygame.image.load(resource_path("assets/pausemenu/resumebutton.png")), (400, 164))
+pause_return_rect = return_button.get_rect(topleft=(460, 200))
+pause_resume_rect = resume_button.get_rect(topleft=(460, 400))
 
 
 ant = Ant(col=5, row=5)
@@ -139,9 +141,23 @@ while running:
             running = False
 
         elif event.type == pygame.MOUSEBUTTONDOWN:
-            if not (play or pause or win or dead or rules) and \
-                play_button.get_bounding_rect().move(200,0).collidepoint(pygame.mouse.get_pos()) and hovered_play == True or \
-                play_button_hovered.get_bounding_rect().move(200,0).collidepoint(pygame.mouse.get_pos()) and hovered_play == True:
+            if pause and pause_return_rect.collidepoint(event.pos):
+                play = False
+                dead = False
+                rules = False
+                win = False
+                pause = False
+                snake1.reset(0, 0)
+                ant.col = 5
+                ant.row = 5
+
+            elif pause and pause_resume_rect.collidepoint(event.pos):
+                pause = False
+
+            elif not (play or pause or win or dead or rules) and (
+                play_button.get_rect(topleft=(200, 0)).collidepoint(event.pos)
+                or play_button_hovered.get_rect(topleft=(200, 0)).collidepoint(event.pos)
+            ):
                 current_level = 1
                 load_level(current_level)
                 play = True
@@ -162,20 +178,6 @@ while running:
 
             elif not (play or win or pause) and rules_button.get_rect(topleft=(460,350)).collidepoint(event.pos) and hovered_rules == True:
                 rules = True
-
-            elif pause and return_button.get_rect(topleft=(460,200)).collidepoint(event.pos):
-                play = False
-                dead = False
-                rules = False
-                win = False
-                pause = False
-                snake1.reset(0, 0)
-                ant.col = 5
-                ant.row = 5
-
-            elif pause and resume_button.get_rect(topleft=(460,400)).collidepoint(event.pos):
-                pause = False
-
 
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE and play: #pausing
@@ -271,7 +273,7 @@ while running:
         screen.blit(rules_background, (0,0))
         screen.blit(back, ((10,10)))
 
-    elif not dead and not rules and not win and play:
+    elif pause and not dead and not rules and not win and play:
         #Pause menu
         screen.fill((200, 200, 200))
         draw_grid(screen)
@@ -280,8 +282,8 @@ while running:
         snake1.draw(screen)
         screen.blit(black, ((0,0)))
         draw_hud(screen)
-        screen.blit(return_button, ((460,200)))
-        screen.blit(resume_button,((460,400 )))
+        screen.blit(return_button, pause_return_rect)
+        screen.blit(resume_button, pause_resume_rect)
 
     pygame.display.flip()
     clock.tick(60)
