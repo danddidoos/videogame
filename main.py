@@ -125,7 +125,7 @@ while running:
                 ant.col = 5
                 ant.row = 5
 
-            elif not play and rules_button.get_rect(topleft=(460,350)).collidepoint(event.pos):
+            elif not play or not win and rules_button.get_rect(topleft=(460,350)).collidepoint(event.pos):
                 rules = True
 
     if not play and not dead and not win and not rules:
