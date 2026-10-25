@@ -58,6 +58,14 @@ ant_logo = pygame.image.load("assets/ant_logo.png")
 credits = pygame.transform.scale(pygame.image.load("assets/credits.png"), (500, 150))
 rules_button = pygame.image.load("assets/rules_button.png")
 rules_background = pygame.image.load("assets/rules_background.png")
+game_background_frames = [
+    pygame.transform.scale(
+        pygame.image.load(f"assets/background/background_{frame}.png").convert(),
+        (SCREEN_WIDTH, SCREEN_HEIGHT),
+    )
+    for frame in range(1, 3)
+]
+game_background_frame_duration = 500
 title_screen = pygame.transform.scale(pygame.image.load("assets/menu/titlescreen.png"), (1320, 770))
 black = pygame.transform.scale(pygame.image.load("assets/black.png").convert_alpha(), (1320, 770))
 black.set_alpha(128)
@@ -83,11 +91,14 @@ def draw_fruit(screen):
     fruit.draw(screen)
 
 def draw_grid(surface):
+    frame_index = (
+        pygame.time.get_ticks() // game_background_frame_duration
+    ) % len(game_background_frames)
+    surface.blit(game_background_frames[frame_index], (0, 0))
+
     for row in range(GRID_ROWS):
         for col in range(GRID_COLS):
             rect = pygame.Rect(col * TILE_SIZE, row * TILE_SIZE, TILE_SIZE, TILE_SIZE)
-            base_color = (255, 255, 255)
-            pygame.draw.rect(surface, base_color, rect)
             pygame.draw.rect(surface, (0, 0, 0), rect, 1)
 
 def load_level(level_no):
