@@ -11,9 +11,9 @@ class Fruit:
 
     def set_type(self, fruit_type):
         if fruit_type == "banana":
-            self.image = pygame.transform.scale(pygame.image.load("assets/banana.png").convert_alpha(), (TILE_SIZE, TILE_SIZE))
+            self.image = pygame.transform.scale(pygame.image.load("assets/fruit/banana.png").convert_alpha(), (TILE_SIZE, TILE_SIZE))
         elif fruit_type == "apple":
-            self.image = pygame.transform.scale(pygame.image.load("assets/apple.png").convert_alpha(), (TILE_SIZE, TILE_SIZE))
+            self.image = pygame.transform.scale(pygame.image.load("assets/fruit/apple.png").convert_alpha(), (TILE_SIZE, TILE_SIZE))
         else:
             raise ValueError(f"Unknown fruit type: {fruit_type}")
         self.fruit_type = fruit_type
