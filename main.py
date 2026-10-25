@@ -184,7 +184,7 @@ while running:
         text = large_font.render("Game Over", True, (255, 0, 0))
         text_rect = text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2))
         screen.blit(text, text_rect)
-        level_text = font.render(f"You completed {current_level-1} level{"s" if current_level-1 != 1 else ""}.", True, (255, 0, 0))
+        level_text = font.render(f"You completed {current_level-1} level{'s' if current_level-1 != 1 else ''}.", True, (255, 0, 0))
         text_rect = level_text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 50))
         screen.blit(level_text, text_rect)
         screen.blit(back, (10, 10))
