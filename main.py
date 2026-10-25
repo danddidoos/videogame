@@ -90,6 +90,19 @@ def respawn_fruit(snake, ant):
 def draw_fruit(screen):
     fruit.draw(screen)
 
+def draw_hud(screen):
+    fruit_score_surface = font.render(
+        f"Fruit Counter: {fruit_counter}/{levels[current_level]['required_fruit']}",
+        True,
+        (0, 0, 0),
+    )
+    fruit_score_rect = fruit_score_surface.get_rect(topright=(SCREEN_WIDTH - 20, 20))
+    screen.blit(fruit_score_surface, fruit_score_rect)
+
+    level_counter_surface = font.render(f"Level: {current_level}", True, (0, 0, 0))
+    level_counter_rect = level_counter_surface.get_rect(topright=(SCREEN_WIDTH - 20, 50))
+    screen.blit(level_counter_surface, level_counter_rect)
+
 def draw_grid(surface):
     frame_index = (
         pygame.time.get_ticks() // game_background_frame_duration
@@ -218,14 +231,10 @@ while running:
         screen.blit(back, (10, 10))
         draw_fruit(screen)
         snake1.draw(screen)
+        draw_hud(screen)
 
     elif not play and not win and not rules and not pause:
-        fruit_score_surface = font.render(f"Fruit Counter: {fruit_counter}/{levels[current_level]['required_fruit']}", True, (0,0,0))
-        fruit_score_rect = fruit_score_surface.get_rect(topright=(SCREEN_WIDTH - 20, 20))
-        screen.blit(fruit_score_surface, fruit_score_rect)
-        level_counter_surface = font.render(f"Level: {current_level}", True, (0,0,0))
-        level_counter_rect = level_counter_surface.get_rect(topright=(SCREEN_WIDTH - 20, 50))
-        screen.blit(level_counter_surface, level_counter_rect)
+        draw_hud(screen)
 
     elif dead:
         # Death screen
@@ -257,11 +266,9 @@ while running:
         draw_grid(screen)
         ant.draw(screen, fruit_counter)
         draw_fruit(screen)
-        fruit_score_surface = font.render(f"Fruit Counter: {fruit_counter}", True, (0,0,0))
-        fruit_score_rect = fruit_score_surface.get_rect(topright=(SCREEN_WIDTH - 20, 20))
-        screen.blit(fruit_score_surface, fruit_score_rect)
         snake1.draw(screen)
         screen.blit(black, ((0,0)))
+        draw_hud(screen)
         screen.blit(return_button, ((460,200)))
         screen.blit(resume_button,((460,400 )))
 
