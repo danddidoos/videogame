@@ -25,3 +25,5 @@ To control the ant, use the arrow keys or WASD.
 
 # Sound Credits
 Walking noise - [Oculus Audio Pack](https://github.com/facebookincubator/Meta-open-sound/releases), FEETHmn_ShoeGrassWalk_OS_05.ogg
+
+Main Menu music - [Oculus Audio Pack](https://github.com/facebookincubator/Meta-open-sound/releases), WINDVege_LightWindTreesBirds_LOOP_01.ogg
