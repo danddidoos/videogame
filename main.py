@@ -1,3 +1,5 @@
+import time
+
 import pygame 
 import random
 from constants import *
@@ -7,6 +9,7 @@ from fruit import Fruit
 from resources import resource_path
 
 pygame.init()
+pygame.mixer.init()
 pygame.display.set_caption("ANT")
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 clock = pygame.time.Clock()
@@ -139,7 +142,7 @@ while running:
 
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if pause and pause_return_rect.collidepoint(event.pos):
-                play = False
+                play = False 
                 dead = False
                 rules = False
                 win = False

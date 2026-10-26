@@ -33,6 +33,9 @@ class Ant(pygame.sprite.Sprite):
         self.last_step_time = 0
         self.speed_up_end_time = 0
 
+        self.walk_sound = pygame.mixer.Sound(resource_path("music/FEETHmn_ShoeGrassWalk_OS_05.ogg"))
+
+
     def handle_movement(self, snake):
         current_time = pygame.time.get_ticks()
         keys = pygame.key.get_pressed()
@@ -76,6 +79,7 @@ class Ant(pygame.sprite.Sprite):
         if self.is_moving:
             self.frame_index += self.walk_animation_speed
 
+
             if not is_key_pressed and self.frame_index >= 2.0:
                 self.frame_index = 0.0
                 self.is_moving = False
@@ -96,6 +100,8 @@ class Ant(pygame.sprite.Sprite):
             if not self.is_moving:
                 self.frame_index = 0.0
             self.is_moving = True
+            if pygame.mixer.find_channel() and not pygame.mixer.Channel(0).get_busy():
+                pygame.mixer.Channel(0).play(self.walk_sound)
 
     def draw(self, surface, fruit_counter, level_fruits):
         angles = {
