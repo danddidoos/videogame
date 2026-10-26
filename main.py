@@ -13,6 +13,8 @@ pygame.mixer.init()
 pygame.display.set_caption("ANT")
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 clock = pygame.time.Clock()
+menu_music = pygame.mixer.Sound(resource_path("music/WINDVege_LightWindTreesBirds_LOOP_01.ogg"))
+current_music = None
 
 running = True
 play = False
@@ -135,6 +137,14 @@ def load_level(level_no):
     respawn_fruit(snake1, ant)
     fruit_counter = 0
 
+def play_bgm(music_path, loop = 1, volume = 0.5):
+    global current_music
+    if current_music != music_path:
+        pygame.mixer.music.load("music/WINDVege_LightWindTreesBirds_LOOP_01.ogg")
+        pygame.mixer.music.set_volume(volume)
+        pygame.mixer.music.play(loop)
+        current_music = music_path
+
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -164,6 +174,7 @@ while running:
                 dead = False
                 win = False
                 rules = False
+                pygame.mixer.music.pause()
 
 
             elif not (play or pause) and back.get_rect(topleft=(10, 10)).collidepoint(event.pos):
@@ -175,6 +186,7 @@ while running:
                 snake1.reset(0, 0)
                 ant.col = 5
                 ant.row = 5
+                pygame.mixer.music.unpause()
 
             elif not (play or win or pause) and rules_button.get_rect(topleft=(460,350)).collidepoint(event.pos) and hovered_rules == True:
                 rules = True
@@ -183,12 +195,15 @@ while running:
             if event.key == pygame.K_ESCAPE and play: #pausing
                 if not pause:
                     pause = True
+                    pygame.mixer.music.unpause()
                 else:
                     pause = False
+                    pygame.mixer.music.pause()
 
     if not play and not dead and not win and not rules and not pause:
         # Main Menu
         screen.blit(title_screen, (0, 0))
+        play_bgm(menu_music, volume = 0.4)
         if play_button.get_bounding_rect().move(200,0).collidepoint(pygame.mouse.get_pos()) or \
             play_button_hovered.get_bounding_rect().move(200,0).collidepoint(pygame.mouse.get_pos()):
             screen.blit(play_button_hovered, (200, 0))
@@ -248,6 +263,7 @@ while running:
 
     elif dead:
         # Death screen
+        pygame.mixer.music.pause()
         screen.fill((0, 0, 0))
         text = large_font.render("Game Over", True, (255, 0, 0))
         text_rect = text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2))
@@ -259,6 +275,7 @@ while running:
 
     elif not play and not dead and not rules and not pause and win:
         # Victory screen
+        pygame.mixer.music.pause()
         screen.fill((222, 221, 150))
         text = large_font.render("Victory!", True, (222, 175, 145))
         text_rect = text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 ))
